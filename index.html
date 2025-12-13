@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bertoso Barber - Cadastro</title>
+  <meta name="description" content="Bertoso Barber - Estilo e tradição em cada corte. Assine seu plano mensal.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --background: 20 14% 4%;
+      --foreground: 60 9% 98%;
+      --card: 20 14% 8%;
+      --card-foreground: 60 9% 98%;
+      --primary: 43 74% 49%;
+      --primary-foreground: 20 14% 4%;
+      --muted: 20 14% 15%;
+      --muted-foreground: 60 5% 64%;
+      --border: 43 30% 20%;
+      --ring: 43 74% 49%;
+      --radius: 0.75rem;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: linear-gradient(180deg, hsl(var(--background)) 0%, hsl(20 14% 6%) 50%, hsl(var(--background)) 100%);
+      color: hsl(var(--foreground));
+      min-height: 100vh;
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1rem;
+    }
+
+    /* Hero Section */
+    .hero {
+      position: relative;
+      min-height: 60vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1585747860715-2ba37e788b70?w=1920&q=80') center/cover no-repeat;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to bottom, 
+        hsla(var(--background), 0.8) 0%, 
+        hsla(var(--background), 0.6) 50%, 
+        hsl(var(--background)) 100%
+      );
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 10;
+      text-align: center;
+      padding: 5rem 1rem;
+      animation: fadeIn 0.8s ease-out;
+    }
+
+    .scissors-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      color: hsl(var(--primary));
+      margin-bottom: 1.5rem;
+      animation: float 3s ease-in-out infinite;
+    }
+
+    .hero-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 10vw, 6rem);
+      letter-spacing: 0.1em;
+      background: linear-gradient(135deg, hsl(43 74% 55%) 0%, hsl(43 74% 49%) 50%, hsl(35 70% 45%) 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 1rem;
+    }
+
+    .hero-subtitle {
+      font-size: clamp(1rem, 3vw, 1.25rem);
+      color: hsl(var(--muted-foreground));
+      max-width: 32rem;
+      margin: 0 auto;
+    }
+
+    /* Form Section */
+    .form-section {
+      padding: 3rem 1rem 5rem;
+    }
+
+    .form-card {
+      max-width: 42rem;
+      margin: 0 auto;
+      background: linear-gradient(135deg, hsl(var(--card)) 0%, hsl(20 14% 6%) 100%);
+      border: 1px solid hsl(var(--border));
+      border-radius: 1rem;
+      padding: 2rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+      animation: slideUp 0.6s ease-out 0.2s both;
+    }
+
+    @media (min-width: 768px) {
+      .form-card {
+        padding: 2.5rem;
+      }
+    }
+
+    .form-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(1.75rem, 5vw, 2.25rem);
+      text-align: center;
+      letter-spacing: 0.1em;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-subtitle {
+      text-align: center;
+      color: hsl(var(--muted-foreground));
+      margin-bottom: 2rem;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .form-label svg {
+      width: 1rem;
+      height: 1rem;
+      color: hsl(var(--primary));
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 0.75rem 1rem;
+      background: hsl(var(--muted));
+      border: 1px solid hsl(var(--border));
+      border-radius: var(--radius);
+      color: hsl(var(--foreground));
+      font-size: 1rem;
+      font-family: inherit;
+      transition: all 0.2s ease;
+    }
+
+    .form-input::placeholder {
+      color: hsl(var(--muted-foreground));
+    }
+
+    .form-input:focus {
+      outline: none;
+      border-color: hsl(var(--primary));
+      box-shadow: 0 0 0 3px hsla(var(--primary), 0.2);
+    }
+
+    /* Plan Selector */
+    .plans-label {
+      font-size: 0.875rem;
+      font-weight: 500;
+      margin-bottom: 0.75rem;
+    }
+
+    .plans-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+    }
+
+    @media (min-width: 640px) {
+      .plans-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .plan-card {
+      position: relative;
+      padding: 1.5rem;
+      border: 2px solid hsl(var(--border));
+      border-radius: var(--radius);
+      background: hsl(var(--muted));
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    .plan-card:hover {
+      border-color: hsla(var(--primary), 0.5);
+      transform: translateY(-2px);
+    }
+
+    .plan-card.selected {
+      border-color: hsl(var(--primary));
+      background: linear-gradient(135deg, hsla(var(--primary), 0.1) 0%, hsla(var(--primary), 0.05) 100%);
+      box-shadow: 0 0 20px hsla(var(--primary), 0.2);
+    }
+
+    .plan-card input {
+      position: absolute;
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .plan-header {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      margin-bottom: 0.75rem;
+    }
+
+    .plan-icon {
+      width: 2.5rem;
+      height: 2.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: hsla(var(--primary), 0.2);
+      border-radius: 50%;
+      color: hsl(var(--primary));
+    }
+
+    .plan-icon svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    .plan-name {
+      font-weight: 600;
+      font-size: 1.125rem;
+    }
+
+    .plan-description {
+      font-size: 0.875rem;
+      color: hsl(var(--muted-foreground));
+      margin-bottom: 1rem;
+    }
+
+    .plan-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.75rem;
+      color: hsl(var(--primary));
+    }
+
+    .plan-price span {
+      font-family: 'Inter', sans-serif;
+      font-size: 0.875rem;
+      color: hsl(var(--muted-foreground));
+    }
+
+    .plan-check {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      width: 1.5rem;
+      height: 1.5rem;
+      border-radius: 50%;
+      background: hsl(var(--primary));
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transform: scale(0);
+      transition: all 0.2s ease;
+    }
+
+    .plan-card.selected .plan-check {
+      opacity: 1;
+      transform: scale(1);
+    }
+
+    .plan-check svg {
+      width: 0.875rem;
+      height: 0.875rem;
+      color: hsl(var(--primary-foreground));
+    }
+
+    /* Submit Button */
+    .submit-btn {
+      width: 100%;
+      padding: 1rem 2rem;
+      margin-top: 1.5rem;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.125rem;
+      letter-spacing: 0.05em;
+      background: linear-gradient(135deg, hsl(43 74% 55%) 0%, hsl(43 74% 49%) 50%, hsl(35 70% 45%) 100%);
+      color: hsl(var(--primary-foreground));
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px hsla(var(--primary), 0.3);
+    }
+
+    .submit-btn:hover:not(:disabled) {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px hsla(var(--primary), 0.4);
+    }
+
+    .submit-btn:disabled {
+      opacity: 0.7;
+      cursor: not-allowed;
+    }
+
+    .submit-btn svg {
+      width: 1.25rem;
+      height: 1.25rem;
+    }
+
+    .spinner {
+      animation: spin 1s linear infinite;
+    }
+
+    /* Footer */
+    footer {
+      padding: 2rem 1rem;
+      text-align: center;
+      border-top: 1px solid hsl(var(--border));
+    }
+
+    footer p {
+      font-size: 0.875rem;
+      color: hsl(var(--muted-foreground));
+    }
+
+    /* Toast */
+    .toast-container {
+      position: fixed;
+      bottom: 1.5rem;
+      right: 1.5rem;
+      z-index: 1000;
+    }
+
+    .toast {
+      padding: 1rem 1.5rem;
+      border-radius: var(--radius);
+      background: hsl(var(--card));
+      border: 1px solid hsl(var(--border));
+      box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+      animation: slideIn 0.3s ease-out;
+      max-width: 24rem;
+    }
+
+    .toast.success {
+      border-color: hsl(142 76% 36%);
+    }
+
+    .toast.error {
+      border-color: hsl(0 84% 60%);
+    }
+
+    .toast-title {
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .toast-message {
+      font-size: 0.875rem;
+      color: hsl(var(--muted-foreground));
+    }
+
+    /* Animations */
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes slideIn {
+      from {
+        opacity: 0;
+        transform: translateX(100%);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+
+    @keyframes float {
+      0%, 100% {
+        transform: translateY(0);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
+    }
+
+    @keyframes spin {
+      from {
+        transform: rotate(0deg);
+      }
+      to {
+        transform: rotate(360deg);
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <svg class="scissors-icon" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+        <circle cx="6" cy="6" r="3"></circle>
+        <circle cx="6" cy="18" r="3"></circle>
+        <line x1="20" y1="4" x2="8.12" y2="15.88"></line>
+        <line x1="14.47" y1="14.48" x2="20" y2="20"></line>
+        <line x1="8.12" y1="8.12" x2="12" y2="12"></line>
+      </svg>
+      <h1 class="hero-title">BERTOSO BARBER</h1>
+      <p class="hero-subtitle">Estilo e tradição em cada corte. Assine seu plano mensal.</p>
+    </div>
+  </section>
+
+  <!-- Form Section -->
+  <section class="form-section">
+    <div class="form-card">
+      <h2 class="form-title">FAÇA SEU CADASTRO</h2>
+      <p class="form-subtitle">Preencha seus dados e escolha o plano ideal para você</p>
+      
+      <form id="cadastroForm">
+        <!-- Nome Completo -->
+        <div class="form-group">
+          <label class="form-label">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            Nome Completo
+          </label>
+          <input type="text" id="nomeCompleto" class="form-input" placeholder="Digite seu nome completo" required>
+        </div>
+
+        <!-- CPF -->
+        <div class="form-group">
+          <label class="form-label">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"></rect>
+              <line x1="1" y1="10" x2="23" y2="10"></line>
+            </svg>
+            CPF
+          </label>
+          <input type="text" id="cpf" class="form-input" placeholder="000.000.000-00" required>
+        </div>
+
+        <!-- Telefone -->
+        <div class="form-group">
+          <label class="form-label">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            Telefone / Celular
+          </label>
+          <input type="text" id="telefone" class="form-input" placeholder="(00) 00000-0000" required>
+        </div>
+
+        <!-- Planos -->
+        <div class="form-group">
+          <label class="plans-label">Escolha seu Plano</label>
+          <div class="plans-grid">
+            <!-- Plano Cabelo -->
+            <label class="plan-card" id="planCabelo">
+              <input type="radio" name="plano" value="cabelo" required>
+              <div class="plan-check">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+              <div class="plan-header">
+                <div class="plan-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <circle cx="6" cy="6" r="3"></circle>
+                    <circle cx="6" cy="18" r="3"></circle>
+                    <line x1="20" y1="4" x2="8.12" y2="15.88"></line>
+                    <line x1="14.47" y1="14.48" x2="20" y2="20"></line>
+                    <line x1="8.12" y1="8.12" x2="12" y2="12"></line>
+                  </svg>
+                </div>
+                <span class="plan-name">Cabelo</span>
+              </div>
+              <p class="plan-description">Corte de cabelo mensal ilimitado</p>
+              <div class="plan-price">R$ 80,00 <span>/mês</span></div>
+            </label>
+
+            <!-- Plano Cabelo + Barba -->
+            <label class="plan-card" id="planCabeloBarba">
+              <input type="radio" name="plano" value="cabelo-barba" required>
+              <div class="plan-check">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+                  <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+              <div class="plan-header">
+                <div class="plan-icon">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path d="M6 3v7a6 6 0 0 0 6 6 6 6 0 0 0 6-6V3"></path>
+                    <line x1="4" y1="21" x2="20" y2="21"></line>
+                    <line x1="12" y1="16" x2="12" y2="21"></line>
+                  </svg>
+                </div>
+                <span class="plan-name">Cabelo + Barba</span>
+              </div>
+              <p class="plan-description">Corte de cabelo e barba mensal ilimitado</p>
+              <div class="plan-price">R$ 130,00 <span>/mês</span></div>
+            </label>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <button type="submit" class="submit-btn" id="submitBtn">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <circle cx="6" cy="6" r="3"></circle>
+            <circle cx="6" cy="18" r="3"></circle>
+            <line x1="20" y1="4" x2="8.12" y2="15.88"></line>
+            <line x1="14.47" y1="14.48" x2="20" y2="20"></line>
+            <line x1="8.12" y1="8.12" x2="12" y2="12"></line>
+          </svg>
+          CONFIRMAR CADASTRO
+        </button>
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2024 Bertoso Barber. Todos os direitos reservados.</p>
+  </footer>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <script>
+    // Google Apps Script URL
+    const GOOGLE_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxSVQB2tbtiyojbefMIjI4QFdSTQADwzX4ptSsCbnzH_O-lIYSOFF5pJEOOo3AOCRUfGQ/exec';
+
+    // Elements
+    const form = document.getElementById('cadastroForm');
+    const cpfInput = document.getElementById('cpf');
+    const telefoneInput = document.getElementById('telefone');
+    const submitBtn = document.getElementById('submitBtn');
+    const planCards = document.querySelectorAll('.plan-card');
+    const toastContainer = document.getElementById('toastContainer');
+
+    // Format CPF
+    function formatCPF(value) {
+      const numbers = value.replace(/\D/g, '').slice(0, 11);
+      return numbers
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d)/, '$1.$2')
+        .replace(/(\d{3})(\d{1,2})$/, '$1-$2');
+    }
+
+    // Format Phone
+    function formatPhone(value) {
+      const numbers = value.replace(/\D/g, '').slice(0, 11);
+      if (numbers.length <= 10) {
+        return numbers
+          .replace(/(\d{2})(\d)/, '($1) $2')
+          .replace(/(\d{4})(\d)/, '$1-$2');
+      }
+      return numbers
+        .replace(/(\d{2})(\d)/, '($1) $2')
+        .replace(/(\d{5})(\d)/, '$1-$2');
+    }
+
+    // Show Toast
+    function showToast(title, message, type = 'success') {
+      const toast = document.createElement('div');
+      toast.className = `toast ${type}`;
+      toast.innerHTML = `
+        <div class="toast-title">${title}</div>
+        <div class="toast-message">${message}</div>
+      `;
+      toastContainer.appendChild(toast);
+      
+      setTimeout(() => {
+        toast.style.animation = 'slideIn 0.3s ease-out reverse';
+        setTimeout(() => toast.remove(), 300);
+      }, 4000);
+    }
+
+    // Set Loading State
+    function setLoading(loading) {
+      submitBtn.disabled = loading;
+      if (loading) {
+        submitBtn.innerHTML = `
+          <svg class="spinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path d="M21 12a9 9 0 1 1-6.219-8.56"></path>
+          </svg>
+          Enviando...
+        `;
+      } else {
+        submitBtn.innerHTML = `
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <circle cx="6" cy="6" r="3"></circle>
+            <circle cx="6" cy="18" r="3"></circle>
+            <line x1="20" y1="4" x2="8.12" y2="15.88"></line>
+            <line x1="14.47" y1="14.48" x2="20" y2="20"></line>
+            <line x1="8.12" y1="8.12" x2="12" y2="12"></line>
+          </svg>
+          CONFIRMAR CADASTRO
+        `;
+      }
+    }
+
+    // Input Formatting
+    cpfInput.addEventListener('input', (e) => {
+      e.target.value = formatCPF(e.target.value);
+    });
+
+    telefoneInput.addEventListener('input', (e) => {
+      e.target.value = formatPhone(e.target.value);
+    });
+
+    // Plan Selection
+    planCards.forEach(card => {
+      const radio = card.querySelector('input[type="radio"]');
+      radio.addEventListener('change', () => {
+        planCards.forEach(c => c.classList.remove('selected'));
+        if (radio.checked) {
+          card.classList.add('selected');
+        }
+      });
+    });
+
+    // Form Submit
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const nomeCompleto = document.getElementById('nomeCompleto').value.trim();
+      const cpf = cpfInput.value;
+      const telefone = telefoneInput.value;
+      const planoInput = document.querySelector('input[name="plano"]:checked');
+
+      // Validation
+      if (!nomeCompleto || !cpf || !telefone || !planoInput) {
+        showToast('Campos obrigatórios', 'Por favor, preencha todos os campos e selecione um plano.', 'error');
+        return;
+      }
+
+      const cpfNumbers = cpf.replace(/\D/g, '');
+      if (cpfNumbers.length !== 11) {
+        showToast('CPF inválido', 'Por favor, insira um CPF válido com 11 dígitos.', 'error');
+        return;
+      }
+
+      const plano = planoInput.value === 'cabelo' ? 'Cabelo - R$80' : 'Cabelo + Barba - R$130';
+
+      setLoading(true);
+
+      try {
+        await fetch(GOOGLE_SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            nome: nomeCompleto,
+            cpf: cpf,
+            telefone: telefone,
+            plano: plano
+          }),
+        });
+
+        showToast('Cadastro realizado!', 'Bem-vindo à família Bertoso Barber! Entraremos em contato em breve.');
+        form.reset();
+        planCards.forEach(c => c.classList.remove('selected'));
+      } catch (error) {
+        console.error('Erro ao enviar dados:', error);
+        showToast('Erro no cadastro', 'Ocorreu um erro. Por favor, tente novamente.', 'error');
+      } finally {
+        setLoading(false);
+      }
+    });
+  </script>
+</body>
+</html>
